@@ -36,13 +36,26 @@ router.put('/:id', function (req, res) {
 
   const referencePath = `/Phones/${id}/`;
   const phoneReference = firebase.database().ref(referencePath);
-  phoneReference.update({ name: name, phone: phone }, function(error){
-    if(error){
+  phoneReference.update({ name: name, phone: phone }, function (error) {
+    if (error) {
       res.send("Data could not be updated" + error)
     } else {
       res.send("Data updated successfully.");
     }
   });
+});
+
+router.delete('/:id', function (req, res) {
+  const id = req.params.id;
+  const referencePath = `/Phones/${id}/`;
+  const phoneReference = firebase.database().ref(referencePath);
+  phoneReference.remove(error => {
+    if (error) {
+      res.send('Data could not be deleted.' + error);
+    } else {
+      res.send('Data deleted successfully.');
+    }
+  })
 })
 
 module.exports = router;
