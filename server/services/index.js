@@ -1,6 +1,6 @@
 const firebase = require('firebase');
 
-const getUsers = () => {
+const getContacts = () => {
    const phoneReference = firebase.database().ref("/Phones/");
    return new Promise((resolve, reject) => {
       phoneReference.on("value", function (snapshot) {
@@ -17,4 +17,31 @@ const getUsers = () => {
          res.send("Read data failed" + errorObject.code)
       });
    })
+}
+
+const createContact = (contact) => {
+   const id = new Date().getTime();
+   const referencePath = `/Phones/${id}/`;
+   const phoneReference = firebase.database().ref(referencePath);
+   return new Promise((resolve, reject) => {
+      phoneReference.set({ name: contact.name, phone: contact.phone }, function (error) {
+         if (error) {
+            reject("Data could not be saved." + error)
+         } else {
+            resolve(contact);
+         }
+      });
+   });
+}
+
+const updateContact = (contact) => {
+
+}
+
+const deleteContact = (contact) => {
+
+}
+
+const searchContact = (contact) => {
+
 }
