@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const firebase = require("firebase");
 
+
+/* ROUTER FOR TESTING PURPOSE ONLY */
+
 router.get('/', function (req, res, next) {
   const phoneReference = firebase.database().ref("/Phones/");
   phoneReference.on("value", function (snapshot) {
@@ -57,5 +60,36 @@ router.delete('/:id', function (req, res) {
     }
   })
 })
+
+router.post('/search', function (req, res) {
+  const { name, phone } = req.body;
+  const referencePath = `/Phones/`;
+  const phoneReference = firebase.database().ref(referencePath);
+
+  if (phone) {
+    phoneReference.orderByChild("phone").equalTo(phone).on("value", function (snapshot) {
+      if (!snapshot.val()) {
+        console.log('there is no related data in database');
+        return res.json([]);
+      }
+      res.json(snapshot.val());
+    }, function (errorObject) {
+      console.log("Search data failed" + errorObject.code);
+      res.send("Search data failed" + errorObject.code)
+    });
+  } else if (name) {
+    phoneReference.orderByChild("name").equalTo(name).on("value", function (snapshot) {
+      if (!snapshot.val()) {
+        console.log('there is no related data in database');
+        return res.json([]);
+      }
+    }, function (errorObject) {
+      console.log("Search data failed" + errorObject.code);
+      res.send("Search data failed" + errorObject.code)
+    });
+  }
+});
+
+
 
 module.exports = router;
