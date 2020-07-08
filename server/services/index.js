@@ -35,13 +35,35 @@ const createContact = (contact) => {
 }
 
 const updateContact = (contact) => {
-
+   var referencePath = `/Phones/${contact.id}/`;
+   var phoneReference = firebase.database().ref(referencePath);
+   return new Promise((resolve, reject) => {
+      phoneReference.update({ name: contact.name, phone: contact.phone }, function (error) {
+         if (error) {
+            reject("Data could not be updated" + error)
+         } else {
+            resolve(contact);
+         }
+      });
+   })
 }
 
 const deleteContact = (contact) => {
-
+   var referencePath = `/Users/${contact.id}/`;
+   var phoneReference = firebase.database().ref(referencePath);
+   return (new Promise((resolve, reject) => {
+      phoneReference.remove((error) => {
+         if (error) {
+            reject("Data could not be deleted." + error);
+         } else {
+            resolve(contact);
+         }
+      })
+   }));
 }
 
 const searchContact = (contact) => {
 
 }
+
+module.exports = {getContacts, createContact, updateContact, deleteContact}
