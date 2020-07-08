@@ -9,10 +9,10 @@ exports.update = {
          type : new GraphQLNonNull(GraphQLID)
       },
       name : {
-         type: new GraphQLNonNull(GraphQLString)
+         type: GraphQLString
       },
       phone:{
-         type: new GraphQLNonNull(GraphQLInt)
+         type: GraphQLString
       },
    },
    resolve(root, params){

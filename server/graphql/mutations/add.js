@@ -5,18 +5,18 @@ const { param } = require('../../routes');
 
 exports.add = {
    type: phoneType,
-   args:{
-      id:{
-         type: new GraphQLNonNull(GraphQLID),
+   args: {
+      id: {
+         type: GraphQLID
       },
-      name : {
+      name: {
          type: new GraphQLNonNull(GraphQLString),
       },
-      phone : {
-         type : new GraphQLNonNull(GraphQLInt),
+      phone: {
+         type: new GraphQLNonNull(GraphQLString),
       }
    },
-   resolve(root, params){
+   resolve(root, params) {
       return services.createContact(params);
    }
 }

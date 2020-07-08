@@ -14,7 +14,7 @@ const getContacts = () => {
          phoneReference.off("value");
       }, function (errorObject) {
          console.log("Read data failed" + errorObject.code);
-         res.send("Read data failed" + errorObject.code)
+         reject("Read data failed" + errorObject.code)
       });
    })
 }
@@ -49,7 +49,7 @@ const updateContact = (contact) => {
 }
 
 const deleteContact = (contact) => {
-   var referencePath = `/Users/${contact.id}/`;
+   var referencePath = `/Phones/${contact.id}/`;
    var phoneReference = firebase.database().ref(referencePath);
    return (new Promise((resolve, reject) => {
       phoneReference.remove((error) => {

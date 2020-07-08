@@ -4,7 +4,7 @@ var phoneType = require('../types/phone').phoneType;
 
 exports.queryType = new GraphQLObjectType({
    name: 'Query',
-   field: function () {
+   fields: function () {
       return {
          phones: {
             type: new GraphQLList(phoneType),
