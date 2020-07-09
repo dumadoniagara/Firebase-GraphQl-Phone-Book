@@ -31,10 +31,10 @@ class ContactList extends Component {
                      <th scope="col">Phone</th>
                      <th scope="col">Actions</th>
                   </tr>
-                  <tbody>
-                     {nodes}
-                  </tbody>
                </thead>
+               <tbody>
+                  {nodes}
+               </tbody>
             </table>
          </div >
       )
