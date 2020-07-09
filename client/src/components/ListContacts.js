@@ -5,16 +5,18 @@ import { loadContacts } from '../actions';
 
 class ContactList extends Component {
    componentDidMount() {
-      this.props.loadPhones();
+      this.props.loadContacts();
    }
    render() {
-      const nodes = this.props.contacts.map((item, index)=>{
-         return(
+      const nodes = this.props.contacts.map((item, index) => {
+         return (
             <Contact
-            key={index}
-            id={item.id}
-            name={item.name}
-            phone={item.phone}
+               key={index}
+               index={index + 1}
+               id={item.id}
+               name={item.name}
+               phone={item.phone}
+               sent={item.sent}
             />
          )
       })
