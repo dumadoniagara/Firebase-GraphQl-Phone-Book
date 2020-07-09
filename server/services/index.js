@@ -20,8 +20,7 @@ const getContacts = () => {
 }
 
 const createContact = (contact) => {
-   const id = new Date().getTime();
-   const referencePath = `/Phones/${id}/`;
+   const referencePath = `/Phones/${contact.id}/`;
    const phoneReference = firebase.database().ref(referencePath);
    return new Promise((resolve, reject) => {
       phoneReference.set({ name: contact.name, phone: contact.phone }, function (error) {

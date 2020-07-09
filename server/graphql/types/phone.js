@@ -2,8 +2,7 @@ const {
    GraphQLObjectType,
    GraphQLNonNull,
    GraphQLID,
-   GraphQLString,
-   GraphQLInt
+   GraphQLString
 } = require('graphql');
 
 exports.phoneType = new GraphQLObjectType({

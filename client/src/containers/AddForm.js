@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { postContact } from '../actions';
 
 class AddForm extends Component {
 
    constructor(props) {
       super(props);
-      this.state = {
-         name: '', phone: ''
-      }
+      this.state = { name: '', phone: '' }
       this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+
    }
 
    handleChange(event) {
@@ -17,6 +18,10 @@ class AddForm extends Component {
 
    handleSubmit(event) {
       event.preventDefault();
+      if (this.state.name && this.state.phone) {
+         this.props.postContact(this.state.name, this.state.phone)
+         this.setState({ name: '', phone: '' })
+      }
 
    }
 
@@ -70,4 +75,11 @@ class AddForm extends Component {
    }
 }
 
-export default AddForm;
+const mapDispatchToProps = dispatch => ({
+   postContact: (name, phone) => dispatch(postContact(name, phone))
+})
+
+export default connect(
+   null,
+   mapDispatchToProps
+)(AddForm)

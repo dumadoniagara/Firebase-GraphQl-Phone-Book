@@ -59,9 +59,36 @@ export const postContactRedux = (id, name, phone) => ({
 })
 
 export const postContact = (name, phone) => {
-   const id = Date.now();
+
+   const addQuery = gql`
+        mutation addContact($id: ID!, $name: String!, $phone: String!) {
+            addContact(id: $id, name: $name, phone: $phone) {
+                id
+                name
+                phone
+            }
+        }`;
+
    return dispatch => {
-      dispatch()
+      const id = new Date().getTime();
+      dispatch(postContactRedux(id, name, phone));
+
+      return client.mutate({
+         mutation: addQuery,
+         variables: {
+            id,
+            name,
+            phone
+         }
+      })
+         .then(function (response) {
+            console.log('berhasil then', response.data.addContact)
+            dispatch(postContactSuccess(response.data.addContact))
+         })
+         .catch(function (error) {
+            console.log('gagal catch', error)
+            dispatch(postContactFailure(id))
+         })
    }
 
 }
