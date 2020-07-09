@@ -7,16 +7,16 @@ const client = new ApolloClient({
 });
 
 // start load phones
-export const loadPhonesSuccess = (phones) => ({
-   type: 'LOAD_COMMENT_SUCCESS',
+export const loadContactsSuccess = (phones) => ({
+   type: 'LOAD_CONTACT_SUCCESS',
    phones
 })
 
-export const loadPhonesFailure = () => ({
-   type: 'LOAD_COMMENT_FAILURE'
+export const loadContactsFailure = () => ({
+   type: 'LOAD_CONTACT_FAILURE'
 })
 
-export const loadPhones = () => {
+export const loadContacts = () => {
    const phonesQuery = gql`
    query {
       phones{
@@ -28,14 +28,15 @@ export const loadPhones = () => {
    return dispatch => {
       return client.query({
          query: phonesQuery
-      }).then(function(response){
-         console.log(response);
-         dispatch(loadPhonesSuccess(response.data.phones))
       })
-      .catch(function(error){
-         console.log(error);
-         dispatch(loadPhonesFailure())
-      })
+         .then(function (response) {
+            console.log(response);
+            dispatch(loadContactsSuccess(response.data.phones))
+         })
+         .catch(function (error) {
+            console.log(error);
+            dispatch(loadContactsFailure())
+         })
    }
 }
 
