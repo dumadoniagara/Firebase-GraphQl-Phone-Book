@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class AddForm extends Component {
 
@@ -10,7 +11,12 @@ class AddForm extends Component {
       this.handleChange = this.handleChange.bind(this);
    }
 
-   handleChange(event){
+   handleChange(event) {
+      this.setState({ [event.target.name]: event.target.value });
+   }
+
+   handleSubmit(event) {
+      event.preventDefault();
 
    }
 
@@ -23,11 +29,11 @@ class AddForm extends Component {
 
             <div className="collapse mb-3" id="add-collapse">
                <div className="card card-body">
-                  <form>
+                  <form onSubmit={this.handleSubmit}>
                      <div className="form-group">
                         <div className="row">
                            <div className="col">
-                              <label for="name">Name</label>
+                              <label>Name</label>
                               <input
                                  type="text"
                                  name="name"
@@ -35,10 +41,11 @@ class AddForm extends Component {
                                  placeholder="Input contact name..."
                                  value={this.state.name}
                                  required={true}
+                                 onChange={this.handleChange}
                               />
                            </div>
                            <div className="col">
-                              <label for="phone">Phone</label>
+                              <label>Phone</label>
                               <input
                                  type="text"
                                  name="phone"
@@ -46,6 +53,7 @@ class AddForm extends Component {
                                  value={this.state.phone}
                                  className="form-control"
                                  required={true}
+                                 onChange={this.handleChange}
                               />
                            </div>
                         </div>

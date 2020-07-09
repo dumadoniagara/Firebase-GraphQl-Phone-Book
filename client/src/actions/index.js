@@ -40,3 +40,31 @@ export const loadContacts = () => {
    }
 }
 
+// load end
+
+// Post contact start
+export const postContactSuccess = (contact) => ({
+   type: 'POST_CONTACT_SUCCESS',
+   contact
+})
+
+export const postContactFailure = (id) => ({
+   type: 'POST_CONTACT_FAILURE',
+   id
+})
+
+export const postContactRedux = (id, name, phone) => ({
+   type: 'POST_CONTACT',
+   id, name, phone
+})
+
+export const postContact = (name, phone) => {
+   const id = Date.now();
+   return dispatch => {
+      dispatch()
+   }
+
+}
+
+
+// post contact end
