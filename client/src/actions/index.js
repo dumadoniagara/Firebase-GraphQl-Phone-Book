@@ -95,3 +95,46 @@ export const postContact = (name, phone) => {
 
 
 // post contact end
+
+// Delete Contact Start
+const deleteContactRedux = (id) => ({
+   type: 'DELETE_CONTACT', id
+})
+
+export const deleteContactSuccess = (id) => ({
+   type: 'DELETE_CONTACT_SUCCESS', id
+})
+
+export const deleteContactFailure = () => ({
+   type: 'DELETE_CONTACT_FAILURE'
+})
+
+export const deleteContact = (id) => {
+   console.log(id)
+   const deleteQuery = gql`
+   mutation deleteContact($id: ID!){
+      deleteContact(id: $id){
+         id
+      }
+   }`;
+   return dispatch =>{
+      dispatch(deleteContactRedux(id));
+
+      return client.mutate({
+         mutation : deleteQuery,
+         variables : {
+            id
+         }
+      })
+      .then(function(response){
+         dispatch(deleteContactSuccess(response))
+      })
+      .catch(function(error){
+         console.log('error mutate delete', error);
+         dispatch(deleteContactFailure())
+      })
+   }
+}
+
+
+// Delete Contact End
