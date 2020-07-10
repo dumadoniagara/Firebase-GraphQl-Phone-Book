@@ -20,14 +20,13 @@ const contacts = (state = [], action) => {
          ]
 
       case 'POST_CONTACT_SUCCESS':
-         console.log('post contact success', action.contact)
-         return action.contact.map(item => {
+         console.log('post contact success', action)
+         return state.map(item => {
             item.sent = true;
             return item
          })
 
       case 'POST_CONTACT_FAILURE':
-         console.log('gatot')
          return state.map((item) => {
             if (item.id === action.id) {
                item.sent = false;

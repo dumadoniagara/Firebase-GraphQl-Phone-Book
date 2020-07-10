@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Contact from './Contact';
+import Contact from './ContactActive';
 import { connect } from 'react-redux';
 import { loadContacts } from '../actions';
 
@@ -7,6 +7,7 @@ class ContactList extends Component {
    componentDidMount() {
       this.props.loadContacts();
    }
+
    render() {
       const nodes = this.props.contacts.map((item, index) => {
          return (
@@ -39,7 +40,6 @@ class ContactList extends Component {
          </div >
       )
    }
-
 }
 
 const mapStateToProps = (state) => ({

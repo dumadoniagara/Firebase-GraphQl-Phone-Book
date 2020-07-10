@@ -7,7 +7,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers/index';
 import thunk from 'redux-thunk';
-import PhoneBook from './components/PhoneBox'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

@@ -20,6 +20,8 @@ class AddForm extends Component {
       if (this.state.name && this.state.phone) {
          this.props.postContact(this.state.name, this.state.phone)
          this.setState({ name: '', phone: '' })
+      } else {
+         // swall
       }
 
    }

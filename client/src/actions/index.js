@@ -1,5 +1,6 @@
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
+import Swal from 'sweetalert2';
 
 const API_URL = 'http://localhost:3001/graphql/';
 const client = new ApolloClient({
@@ -43,23 +44,23 @@ export const loadContacts = () => {
 // load end
 
 // Post contact start
-export const postContactSuccess = (contact) => ({
+const postContactSuccess = (contact) => ({
    type: 'POST_CONTACT_SUCCESS',
    contact
 })
 
-export const postContactFailure = (id) => ({
+const postContactFailure = (id) => ({
    type: 'POST_CONTACT_FAILURE',
    id
 })
 
-export const postContactRedux = (id, name, phone) => ({
+const postContactRedux = (id, name, phone) => ({
    type: 'POST_CONTACT',
    id, name, phone
 })
 
 export const postContact = (name, phone) => {
-
+   const id = new Date().getTime();
    const addQuery = gql`
         mutation addContact($id: ID!, $name: String!, $phone: String!) {
             addContact(id: $id, name: $name, phone: $phone) {
@@ -70,7 +71,6 @@ export const postContact = (name, phone) => {
         }`;
 
    return dispatch => {
-      const id = new Date().getTime();
       dispatch(postContactRedux(id, name, phone));
 
       return client.mutate({
@@ -82,17 +82,76 @@ export const postContact = (name, phone) => {
          }
       })
          .then(function (response) {
-            console.log('berhasil then', response.data.addContact)
+            Swal.fire({
+               position: 'center',
+               icon: 'success',
+               title: 'Contact added successfully!',
+               showConfirmButton: false,
+               timer: 1200
+            })
             dispatch(postContactSuccess(response.data.addContact))
          })
          .catch(function (error) {
-            console.log('gagal catch', error)
+            Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Something went wrong! check your connection',
+               showConfirmButton: true
+            })
             dispatch(postContactFailure(id))
          })
    }
 
 }
 // post contact end
+
+// Resend start
+
+export const resendContact = (id, name, phone) => {
+   const addQuery = gql`
+        mutation addContact($id: ID!, $name: String!, $phone: String!) {
+            addContact(id: $id, name: $name, phone: $phone) {
+                id
+                name
+                phone
+            }
+        }`;
+   return dispatch => {
+      return client.mutate({
+         mutation: addQuery,
+         variables: {
+            id,
+            name,
+            phone
+         }
+      })
+         .then(function (response) {
+            console.log(`berhasil resend`)
+            Swal.fire({
+               position: 'center',
+               icon: 'success',
+               title: 'Contact added successfully!',
+               showConfirmButton: false,
+               timer: 1000
+            })
+            dispatch(postContactSuccess(response.data.addContact))
+         })
+         .catch(function (error) {
+            console.log('gagal resend', error)
+            Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Something went wrong! check your connection',
+               showConfirmButton: true
+            })
+            dispatch(postContactFailure(id))
+         })
+   }
+}
+// Resend end
+
+
+
 
 // Delete Contact Start
 export const deleteContactRedux = (id) => ({
@@ -114,24 +173,22 @@ export const deleteContact = (id) => {
          id
       }
    }`;
-   return dispatch =>{
+   return dispatch => {
       dispatch(deleteContactRedux(id));
 
       return client.mutate({
-         mutation : deleteQuery,
-         variables : {
+         mutation: deleteQuery,
+         variables: {
             id
          }
       })
-      .then(function(response){
-         dispatch(deleteContactSuccess(response))
-      })
-      .catch(function(error){
-         console.log('error mutate delete', error);
-         dispatch(deleteContactFailure())
-      })
+         .then(function (response) {
+            dispatch(deleteContactSuccess(response))
+         })
+         .catch(function (error) {
+            dispatch(deleteContactFailure())
+
+         })
    }
 }
-
-
 // Delete Contact End
