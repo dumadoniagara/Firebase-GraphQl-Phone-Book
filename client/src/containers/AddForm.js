@@ -9,7 +9,6 @@ class AddForm extends Component {
       this.state = { name: '', phone: '' }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-
    }
 
    handleChange(event) {
