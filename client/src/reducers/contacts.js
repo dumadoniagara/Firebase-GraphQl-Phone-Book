@@ -4,11 +4,11 @@ const contacts = (state = [], action) => {
       case 'LOAD_CONTACT_SUCCESS':
          return action.phones.map((item) => {
             item.sent = true;
+            item.isEditing = false;
             return item;
          })
 
       case 'POST_CONTACT':
-         console.log('ini state setelah post contact', state)
          return [
             ...state,
             {
@@ -20,13 +20,53 @@ const contacts = (state = [], action) => {
          ]
 
       case 'POST_CONTACT_SUCCESS':
-         console.log('post contact success', action)
          return state.map(item => {
             item.sent = true;
             return item
          })
 
       case 'POST_CONTACT_FAILURE':
+         return state.map((item) => {
+            if (item.id === action.id) {
+               item.sent = false;
+            }
+            return item
+         })
+
+      case 'ON_UPDATE_CONTACT':
+         console.log('id yang mau diedit adalah', action.id);
+         return state.map((item) => {
+            if (item.id === action.id) {
+               item.isEditing = true;
+            }
+            return item
+         })
+
+      case 'OFF_UPDATE_CONTACT':
+         return state.map((item) => {
+            if (item.id === action.id) {
+               item.isEditing = false;
+            }
+            return item
+         })
+
+      case 'UPDATE_CONTACT':
+         console.log('ini state setelah di update', state)
+         return state.map(item => {
+            if (item.id === action.id) {
+               item.name = action.name;
+               item.phone = action.phone;
+            }
+            return item
+         })
+
+      case 'UPDATE_CONTACT_SUCCESS':
+         return state.map(item => {
+            item.sent = true;
+            return item
+         })
+
+      case 'UPDATE_CONTACT_FAILURE':
          return state.map((item) => {
             if (item.id === action.id) {
                item.sent = false;
