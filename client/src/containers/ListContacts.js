@@ -16,6 +16,7 @@ class ContactList extends Component {
                <EditForm
                   key={index}
                   index={index + 1}
+                  id={item.id}
                   name={item.name}
                   phone={item.phone}
                   sent={item.sent}

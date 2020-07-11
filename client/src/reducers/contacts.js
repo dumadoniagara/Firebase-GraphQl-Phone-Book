@@ -63,6 +63,7 @@ const contacts = (state = [], action) => {
       case 'UPDATE_CONTACT_SUCCESS':
          return state.map(item => {
             item.sent = true;
+            item.isEditing = false;
             return item
          })
 

@@ -255,7 +255,7 @@ export const updateContact = (id, name, phone) => {
             Swal.fire({
                position: 'center',
                icon: 'success',
-               title: 'Contact added successfully!',
+               title: 'Contact updated successfully!',
                showConfirmButton: false,
                timer: 1200
             })
