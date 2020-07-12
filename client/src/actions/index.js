@@ -41,6 +41,37 @@ export const loadContacts = () => {
    }
 }
 
+export const searchContacts = (name, phone) => {
+   const searchQuery = gql`
+   query {
+      searchPhones($name: String!, $phone: String!){
+         searchPhones(name: $name, phone: $phone){
+            id
+            name
+            phone
+         }
+      }
+   }`;
+   return dispatch => {
+      return client.query({
+         query: searchQuery,
+         variables: {
+            name,
+            phone
+         }
+      })
+         .then(function (response) {
+            console.log('query suc', response.data.searchPhones)
+            dispatch(loadContactsSuccess(response.data.searchPhones))
+         })
+         .catch(function (error) {
+            console.log('query not suc', error)
+            console.log(error);
+            dispatch(loadContactsFailure())
+         })
+   }
+}
+
 // load end
 
 // Post contact start

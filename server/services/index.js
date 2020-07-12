@@ -76,13 +76,10 @@ const searchContacts = (contact) => {
             const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
                .filter(item => {
                   if (contact.name && contact.phone) {
-                     console.log('masuk name dan phone')
                      return item.name.match(regName) && item.phone.match(regPhone)
                   } else if (contact.name){
-                     console.log('masuk name aja')
                      return item.name.match(regName)
                   } else if (contact.phone){
-                     console.log('masuk phone aja')
                      return item.phone.match(regPhone)
                   } else {
                      return false;

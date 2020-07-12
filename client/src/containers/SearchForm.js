@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { } from '../actions';
+import { searchContacts } from '../actions';
 
 class SearchForm extends Component {
 
    constructor(props) {
       super(props);
       this.state = { name: '', phone: '' }
-      this.handleChange = this.handleChange.bind(this);
+      this.handleChangeName = this.handleChangeName.bind(this);
+      this.handleChangePhone = this.handleChangePhone.bind(this);
       this.handleReset = this.handleReset.bind(this);
    }
 
-   handleChange(event) {
-      let { name, phone } = this.state;
-      this.setState({ [event.target.name]: event.target.value });
-      console.log(name, phone)
+   handleChangeName(event) {
+      let { phone } = this.state
+      this.setState({ name: event.target.value })
+      this.props.searchContacts(event.target.value, phone)
+   }
+
+   handleChangePhone(event) {
+      let { name } = this.state
+      this.setState({ phone: event.target.value })
+      this.props.searchContacts(name, event.target.value)
    }
 
    handleReset(event) {
@@ -38,7 +45,7 @@ class SearchForm extends Component {
                            className="form-control"
                            placeholder="Search by name.."
                            value={this.state.name}
-                           onChange={this.handleChange}
+                           onChange={this.handleChangeName}
                            name="name"
                         />
                      </div>
@@ -51,7 +58,7 @@ class SearchForm extends Component {
                            placeholder="Search by phone.."
                            className="form-control"
                            value={this.state.phone}
-                           onChange={this.handleChange}
+                           onChange={this.handleChangePhone}
                            name="phone"
                         />
                      </div>
@@ -67,11 +74,12 @@ class SearchForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+   searchContacts: (name, phone) => dispatch(searchContacts(name, phone))
 })
 
 export default connect(
-
+   null,
+   mapDispatchToProps
 )(SearchForm)
 
 
