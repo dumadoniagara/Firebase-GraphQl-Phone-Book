@@ -1,6 +1,6 @@
-const { GraphQLObjectType, GraphQLSchema } = require('graphql');
-const queryType = require('./queries/phone').queryType;
+const { GraphQLObjectType, GraphQLSchema, GraphQLList } = require('graphql');
 const mutation = require('./mutations/index');
+const { queryType } = require('./queries/phone');
 
 exports.phoneSchema = new GraphQLSchema({
    query: queryType,

@@ -9,6 +9,7 @@ const getContacts = () => {
             resolve([]);
          } else {
             const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
+            console.log(data);
             resolve(data);
          }
          phoneReference.off("value");
@@ -61,8 +62,41 @@ const deleteContact = (contact) => {
    }));
 }
 
-const searchContact = (contact) => {
-
+const searchContacts = (contact) => {
+   let regName = new RegExp(contact.name, 'ig');
+   let regPhone = new RegExp(contact.phone, 'g');
+   console.log(regPhone)
+   const phoneReference = firebase.database().ref("/Phones/");
+   return new Promise((resolve, reject) => {
+      phoneReference.on("value", function (snapshot) {
+         const folders = snapshot.val();
+         if (snapshot.val() === null) {
+            resolve([]);
+         } else {
+            const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
+               .filter(item => {
+                  if (contact.name && contact.phone) {
+                     console.log('masuk name dan phone')
+                     return item.name.match(regName) && item.phone.match(regPhone)
+                  } else if (contact.name){
+                     console.log('masuk name aja')
+                     return item.name.match(regName)
+                  } else if (contact.phone){
+                     console.log('masuk phone aja')
+                     return item.phone.match(regPhone)
+                  } else {
+                     return false;
+                  }
+               })
+            console.log(data);
+            resolve(data);
+         }
+         phoneReference.off("value");
+      }, function (errorObject) {
+         console.log("Read data failed" + errorObject.code);
+         reject("Read data failed" + errorObject.code)
+      });
+   })
 }
 
-module.exports = {getContacts, createContact, updateContact, deleteContact}
+module.exports = { getContacts, createContact, updateContact, deleteContact, searchContacts }
