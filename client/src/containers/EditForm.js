@@ -39,14 +39,14 @@ class EditForm extends Component {
                <th scope="row">{this.props.index}</th>
             </div>
             <td>
-               <div className="col-md-10 ">
+               <div className="col-md-8 ">
                   <form className="form-row" onSubmit={this.handleSubmit}>
                      <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.handleChange} required={true} />
                   </form>
                </div>
             </td>
             <td>
-               <div className="col-md-10 ">
+               <div className="col-md-8 ">
                   <form className="form-row" onSubmit={this.handleSubmit}>
                      <input type="text" className="form-control" name="phone" value={this.state.phone} onChange={this.handleChange} required={true} />
                   </form>
