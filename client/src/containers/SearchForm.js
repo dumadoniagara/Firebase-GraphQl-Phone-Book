@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchContacts } from '../actions';
+import { searchContacts, loadContacts } from '../actions';
 
 class SearchForm extends Component {
 
@@ -25,6 +25,7 @@ class SearchForm extends Component {
    }
 
    handleReset(event) {
+      this.props.loadContacts()
       this.setState({ name: '', phone: '' });
       event.preventDefault();
    }
@@ -74,7 +75,8 @@ class SearchForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-   searchContacts: (name, phone) => dispatch(searchContacts(name, phone))
+   searchContacts: (name, phone) => dispatch(searchContacts(name, phone)),
+   loadContacts: () => dispatch(loadContacts())
 })
 
 export default connect(

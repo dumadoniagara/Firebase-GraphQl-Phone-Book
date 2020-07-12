@@ -43,15 +43,14 @@ export const loadContacts = () => {
 
 export const searchContacts = (name, phone) => {
    const searchQuery = gql`
-   query {
+   query 
       searchPhones($name: String!, $phone: String!){
          searchPhones(name: $name, phone: $phone){
             id
             name
             phone
          }
-      }
-   }`;
+      }`;
    return dispatch => {
       return client.query({
          query: searchQuery,
@@ -65,14 +64,14 @@ export const searchContacts = (name, phone) => {
             dispatch(loadContactsSuccess(response.data.searchPhones))
          })
          .catch(function (error) {
-            console.log('query not suc', error)
+            console.log('query not success', error)
             console.log(error);
             dispatch(loadContactsFailure())
          })
    }
 }
-
 // load end
+
 
 // Post contact start
 const postContactSuccess = (contact) => ({
