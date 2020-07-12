@@ -29,7 +29,7 @@ class AddForm extends Component {
    render() {
       return (
          <div>
-            <button className="btn btn-outline-primary mb-3 d-flex" type="button" data-toggle="collapse" data-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
+            <button className="btn btn-outline-primary ml-3 mb-3 d-flex" type="button" data-toggle="collapse" data-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
                Add New Contact
             </button>
 

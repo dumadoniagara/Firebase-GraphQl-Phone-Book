@@ -7,11 +7,13 @@ import SearchForm from '../containers/SearchForm';
 
 function PhoneBox() {
    return (
-      <div className="phone-box">
-         <Jumbotron />
-         <SearchForm />
-         <AddForm />
-         <ListContacts />
+      <div className="card mt-5">
+         <div className="phone-box">
+            <Jumbotron />
+            <SearchForm />
+            <AddForm />
+            <ListContacts />
+         </div>
       </div>
    );
 }
