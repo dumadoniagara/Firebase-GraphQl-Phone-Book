@@ -37,9 +37,9 @@ class ContactList extends Component {
       })
 
       return (
-         <div className="contact-list">
+         <div className="contact-list" style={{fontFamily: "Roboto"}}>
             <table className="table">
-               <thead className="thead-dark">
+               <thead className="thead-dark" style={{ fontSize : "19px" }}>
                   <tr>
                      <th scope="col">#</th>
                      <th scope="col">Name</th>

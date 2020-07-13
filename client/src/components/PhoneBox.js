@@ -7,12 +7,15 @@ import SearchForm from '../containers/SearchForm';
 
 function PhoneBox() {
    return (
-      <div className="card mt-5">
+      <div className="card mt-5 mb-5">
          <div className="phone-box">
             <Jumbotron />
             <SearchForm />
             <AddForm />
             <ListContacts />
+         </div>
+         <div className="card-footer">
+            <small className="text-muted">© 2020 Duma Doniagara Sambora </small>
          </div>
       </div>
    );

@@ -31,7 +31,6 @@ export const loadContacts = () => {
          query: phonesQuery
       })
          .then(function (response) {
-            console.log(response);
             dispatch(loadContactsSuccess(response.data.phones))
          })
          .catch(function (error) {
@@ -60,11 +59,9 @@ export const searchContacts = (name, phone) => {
          }
       })
          .then(function (response) {
-            console.log('query suc', response.data.searchPhones)
             dispatch(loadContactsSuccess(response.data.searchPhones))
          })
          .catch(function (error) {
-            console.log('query not success', error)
             console.log(error);
             dispatch(loadContactsFailure())
          })
@@ -156,7 +153,6 @@ export const resendContact = (id, name, phone) => {
          }
       })
          .then(function (response) {
-            console.log(`berhasil resend`)
             Swal.fire({
                position: 'center',
                icon: 'success',
@@ -167,7 +163,6 @@ export const resendContact = (id, name, phone) => {
             dispatch(postContactSuccess(response.data.addContact))
          })
          .catch(function (error) {
-            console.log('gagal resend', error)
             Swal.fire({
                icon: 'error',
                title: 'Oops...',

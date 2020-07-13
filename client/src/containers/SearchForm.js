@@ -33,43 +33,46 @@ class SearchForm extends Component {
    render() {
       return (
          <div className="card mb-3">
-            <h5 className="card-header">Search Contact</h5>
-            <div className="card-body">
-               <form>
-                  <div className="form-group row">
-                     <label className="col-sm-1 col-form-label">
-                        <b>Name</b>
-                     </label>
-                     <div className="col-sm-4">
-                        <input
-                           type="text"
-                           className="form-control"
-                           placeholder="Search by name.."
-                           value={this.state.name}
-                           onChange={this.handleChangeName}
-                           name="name"
-                        />
-                     </div>
-                     <label className="col-sm-1 col-form-label">
-                        <b>Phone</b>
-                     </label>
-                     <div className="col-sm-4">
-                        <input
-                           type="text"
-                           placeholder="Search by phone.."
-                           className="form-control"
-                           value={this.state.phone}
-                           onChange={this.handleChangePhone}
-                           name="phone"
-                        />
-                     </div>
-                     <div className="col-md-2">
-                        <button className="btn btn-outline-secondary" onClick={this.handleReset}><i className="fas fa-sync-alt"></i> Reset</button>
-                     </div>
-                  </div>
-               </form>
-            </div>
+            <div className="card-header" style={{ fontSize : "23px" }}>
+               Search Contact
+                 <i className="fas fa-search ml-3"></i>
          </div>
+         <div className="card-body">
+            <form>
+               <div className="form-group row">
+                  <label className="col-sm-1 col-form-label">
+                     <b>Name</b>
+                  </label>
+                  <div className="col-sm-4">
+                     <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by name.."
+                        value={this.state.name}
+                        onChange={this.handleChangeName}
+                        name="name"
+                     />
+                  </div>
+                  <label className="col-sm-1 col-form-label">
+                     <b>Phone</b>
+                  </label>
+                  <div className="col-sm-4">
+                     <input
+                        type="text"
+                        placeholder="Search by phone.."
+                        className="form-control"
+                        value={this.state.phone}
+                        onChange={this.handleChangePhone}
+                        name="phone"
+                     />
+                  </div>
+                  <div className="col-md-2">
+                     <button className="btn btn-outline-secondary" onClick={this.handleReset}><i className="fas fa-sync-alt"></i> Reset</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+         </div >
       )
    }
 }

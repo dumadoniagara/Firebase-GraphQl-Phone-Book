@@ -9,6 +9,7 @@ class AddForm extends Component {
       this.state = { name: '', phone: '' }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleCancle = this.handleCancle.bind(this);
    }
 
    handleChange(event) {
@@ -18,18 +19,24 @@ class AddForm extends Component {
    handleSubmit(event) {
       event.preventDefault();
       if (this.state.name && this.state.phone) {
-         this.props.postContact(this.state.name, this.state.phone)
-         this.setState({ name: '', phone: '' })
+         this.props.postContact(this.state.name, this.state.phone);
+         this.setState({ name: '', phone: '' });
       } else {
          // swall
       }
+   }
 
+   handleCancle(event) {
+      event.preventDefault();
+      this.setState({ name: '', phone: '' })
+      let collapseAdd = document.getElementById('btn-collapse');
+      collapseAdd.click();
    }
 
    render() {
       return (
          <div>
-            <button className="btn btn-outline-primary ml-3 mb-3 d-flex" type="button" data-toggle="collapse" data-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
+            <button id="btn-collapse" className="btn btn-outline-primary ml-3 mb-3 d-flex" type="button" data-toggle="collapse" data-target="#add-collapse" aria-expanded="false" aria-controls="add-collapse">
                Add New Contact
             </button>
 
@@ -39,7 +46,7 @@ class AddForm extends Component {
                      <div className="form-group">
                         <div className="row">
                            <div className="col">
-                              <label>Name</label>
+                              <label><b>Name</b></label>
                               <input
                                  type="text"
                                  name="name"
@@ -51,7 +58,7 @@ class AddForm extends Component {
                               />
                            </div>
                            <div className="col">
-                              <label>Phone</label>
+                              <label><b>Phone</b></label>
                               <input
                                  type="text"
                                  name="phone"
@@ -65,10 +72,17 @@ class AddForm extends Component {
                         </div>
                      </div>
 
-                     <button type="submit" className="btn btn-outline-primary d-flex">
-                        <i className="fas fa-plus"> Save</i>
-                     </button>
+                     <div className="row d-flex justify-content-end" >
+                        <button type="submit" className="btn btn-outline-success d-flex">
+                           <i className="fas fa-plus"> Save</i>
+                        </button>
+
+                        <button type="submit" className="btn btn-outline-warning d-flex ml-2 mr-3" onClick={this.handleCancle}>
+                           <i className="fas fa-ban"> Cancel</i>
+                        </button>
+                     </div>
                   </form>
+
                </div>
             </div>
          </div >
