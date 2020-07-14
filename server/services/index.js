@@ -77,15 +77,14 @@ const searchContacts = (contact) => {
                .filter(item => {
                   if (contact.name && contact.phone) {
                      return item.name.match(regName) && item.phone.match(regPhone)
-                  } else if (contact.name){
+                  } else if (contact.name) {
                      return item.name.match(regName)
-                  } else if (contact.phone){
+                  } else if (contact.phone) {
                      return item.phone.match(regPhone)
                   } else {
                      return false;
                   }
                })
-            console.log(data);
             resolve(data);
          }
          phoneReference.off("value");
