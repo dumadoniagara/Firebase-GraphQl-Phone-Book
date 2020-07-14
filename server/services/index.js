@@ -1,6 +1,7 @@
 const firebase = require('firebase');
+const { off } = require('../app');
 
-const getContacts = () => {
+const getContacts = (offset, limit) => {
    const phoneReference = firebase.database().ref("/Phones/");
    return new Promise((resolve, reject) => {
       phoneReference.on("value", function (snapshot) {
@@ -8,8 +9,26 @@ const getContacts = () => {
          if (snapshot.val() === null) {
             resolve([]);
          } else {
-            const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
-            console.log(data);
+            const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o])).splice(offset, limit);
+            resolve(data);
+         }
+         phoneReference.off("value");
+      }, function (errorObject) {
+         console.log("Read data failed" + errorObject.code);
+         reject("Read data failed" + errorObject.code)
+      });
+   })
+}
+
+const getPages = () => {
+   const phoneReference = firebase.database().ref("/Phones/");
+   return new Promise((resolve, reject) => {
+      phoneReference.on("value", function (snapshot) {
+         const folders = snapshot.val();
+         if (snapshot.val() === null) {
+            resolve([]);
+         } else {
+            const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o])).length;
             resolve(data);
          }
          phoneReference.off("value");
@@ -95,4 +114,4 @@ const searchContacts = (contact) => {
    })
 }
 
-module.exports = { getContacts, createContact, updateContact, deleteContact, searchContacts }
+module.exports = { getContacts, createContact, updateContact, deleteContact, searchContacts, getPages }

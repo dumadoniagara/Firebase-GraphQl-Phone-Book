@@ -16,11 +16,11 @@ exports.queryType = new GraphQLObjectType({
                   defaultValue: { offset: 0, limit: 5 }
                }
             },
-            resolve: (root, params) => {
+            resolve(root, params) {
                const { offset, limit } = params.pagination
                return {
-                  items: services.getContacts().slice(offset, limit),
-                  count: Math.ceil(services.getContacts().length / limit)
+                  count: services.getPages(),
+                  items: services.getContacts(offset, limit)
                }
             }
          },
