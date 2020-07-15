@@ -15,7 +15,7 @@ class ContactList extends Component {
             (
                <EditForm
                   key={index}
-                  index={index + 1}
+                  index={this.props.page == 1 ? index + 1 : (this.props.page - 1) * 5 + (index + 1)}
                   id={item.id}
                   name={item.name}
                   phone={item.phone}
@@ -26,7 +26,7 @@ class ContactList extends Component {
             : (
                <Contact
                   key={index}
-                  index={index + 1}
+                  index={this.props.page == 1 ? index + 1 : (this.props.page - 1) * 5 + (index + 1)}
                   id={item.id}
                   name={item.name}
                   phone={item.phone}

@@ -120,6 +120,18 @@ const contacts = (state = initState, action) => {
             page: state.page + 1
          }
 
+      case 'PREVIOUS_PAGE':
+         return {
+            ...state,
+            page: state.page - 1
+         }
+
+      case 'CHANGE_PAGE':
+         return {
+            ...state,
+            page: action.page
+         }
+
       case 'DELETE_CONTACT_SUCCESS':
       case 'DELETE_CONTACT_FAILURE':
       case 'LOAD_CONTACT_FAILURE':

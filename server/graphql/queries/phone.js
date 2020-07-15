@@ -11,6 +11,8 @@ exports.queryType = new GraphQLObjectType({
          phones: {
             type: PaginatedListType(phoneType),
             args: {
+               name: { type: GraphQLString },
+               phone: { type: GraphQLString },
                pagination: {
                   type: PaginationArgType,
                   defaultValue: { offset: 0, limit: 5 }
@@ -18,20 +20,17 @@ exports.queryType = new GraphQLObjectType({
             },
             resolve(root, params) {
                const { offset, limit } = params.pagination
-               return {
-                  count: services.getPages(),
-                  items: services.getContacts(offset, limit)
+               const { name, phone } = params
+               if (!name && !phone) {
+                  return {
+                     count: services.getPages(),
+                     items: services.getContacts(offset, limit)
+                  }
                }
-            }
-         },
-         searchPhones: {
-            type: new GraphQLList(phoneType),
-            args: {
-               name: { type: GraphQLString },
-               phone: { type: GraphQLString }
-            },
-            resolve(root, params) {
-               return services.searchContacts(params)
+               return {
+                  count: services.searchContactsPages(name, phone),
+                  items: services.searchContacts(name, phone, offset, limit)
+               }
             }
          }
       }

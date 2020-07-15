@@ -8,7 +8,6 @@ const client = new ApolloClient({
 });
 
 // start load phones
-
 export const loadContactsSuccess = (phones) => ({
    type: 'LOAD_CONTACT_SUCCESS',
    phones
@@ -46,16 +45,18 @@ export const loadContacts = (offset = 0, limit = 5) => {
 }
 
 
-export const searchContacts = (name, phone) => {
+export const searchContacts = (name, phone, offset = 0, limit = 5) => {
    const searchQuery = gql`
-   query 
-      searchPhones($name: String!, $phone: String!){
-         searchPhones(name: $name, phone: $phone){
+   query{
+      phones(name: ${name}, phone:${phone}, pagination:{offset: ${offset}, limit:${limit}}){
+         count
+         items{
             id
             name
             phone
          }
-      }`;
+      }
+   }`
    return dispatch => {
       return client.query({
          query: searchQuery,
@@ -317,6 +318,4 @@ export const changePage = (page) => ({
 export const previousPage = () => ({
    type: 'PREVIOUS_PAGE'
 })
-
-
 // pagination actions end

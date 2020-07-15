@@ -81,9 +81,9 @@ const deleteContact = (contact) => {
    }));
 }
 
-const searchContacts = (contact) => {
-   let regName = new RegExp(contact.name, 'ig');
-   let regPhone = new RegExp(contact.phone, 'g');
+const searchContacts = (name, phone, offset = 0, limit = 5) => {
+   let regName = new RegExp(name, 'ig');
+   let regPhone = new RegExp(phone, 'g');
    console.log(regPhone)
    const phoneReference = firebase.database().ref("/Phones/");
    return new Promise((resolve, reject) => {
@@ -93,12 +93,13 @@ const searchContacts = (contact) => {
             resolve([]);
          } else {
             const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
+               .splice(offset, limit)
                .filter(item => {
-                  if (contact.name && contact.phone) {
+                  if (name && phone) {
                      return item.name.match(regName) && item.phone.match(regPhone)
-                  } else if (contact.name) {
+                  } else if (name) {
                      return item.name.match(regName)
-                  } else if (contact.phone) {
+                  } else if (phone) {
                      return item.phone.match(regPhone)
                   } else {
                      return false;
@@ -114,4 +115,38 @@ const searchContacts = (contact) => {
    })
 }
 
-module.exports = { getContacts, createContact, updateContact, deleteContact, searchContacts, getPages }
+const searchContactsPages = (name, phone) => {
+   let regName = new RegExp(name, 'ig');
+   let regPhone = new RegExp(phone, 'g');
+   console.log(regPhone)
+   const phoneReference = firebase.database().ref("/Phones/");
+   return new Promise((resolve, reject) => {
+      phoneReference.on("value", function (snapshot) {
+         const folders = snapshot.val();
+         if (snapshot.val() === null) {
+            resolve([]);
+         } else {
+            const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
+               .filter(item => {
+                  if (name && phone) {
+                     return item.name.match(regName) && item.phone.match(regPhone)
+                  } else if (name) {
+                     return item.name.match(regName)
+                  } else if (phone) {
+                     return item.phone.match(regPhone)
+                  } else {
+                     return false;
+                  }
+               })
+
+            resolve(data.length);
+         }
+         phoneReference.off("value");
+      }, function (errorObject) {
+         console.log("Read data failed" + errorObject.code);
+         reject("Read data failed" + errorObject.code)
+      });
+   })
+}
+
+module.exports = { getContacts, createContact, updateContact, deleteContact, searchContacts, getPages, searchContactsPages }
