@@ -47,26 +47,6 @@ export const loadContacts = (offset = 0, limit = 5) => {
 
 export const searchContacts = (name, phone, offset = 0, limit = 5) => {
    console.log(name, phone, offset, limit);
-
-   // const searchQuery = gql`
-   // query 
-   //    searchPhones($name: String!, $phone: String!){
-   //       searchPhones(name: $name, phone: $phone){
-   //          id
-   //          name
-   //          phone
-   //       }
-   //    }`;
-   // return dispatch => {
-   //    return client.query({
-   //       query: searchQuery,
-   //       variables: {
-   //          name,
-   //          phone
-   //       }
-   //    })
-
-
    const searchQuery = gql`
    query 
       phones(
