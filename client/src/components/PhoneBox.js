@@ -3,6 +3,7 @@ import Jumbotron from './Jumbotron';
 import ListContacts from '../containers/ListContacts';
 import AddForm from '../containers/AddForm';
 import SearchForm from '../containers/SearchForm';
+import Pagination from '../containers/Pagination';
 
 
 function PhoneBox() {
@@ -13,6 +14,7 @@ function PhoneBox() {
             <SearchForm />
             <AddForm />
             <ListContacts />
+            <Pagination />
          </div>
          <div className="card-footer">
             <small className="text-muted">© 2020 Duma Doniagara Sambora </small>

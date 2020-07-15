@@ -1,5 +1,4 @@
 import React from 'react';
-import EditForm from '../containers/EditForm';
 
 const Contact = (props) => {
    return (

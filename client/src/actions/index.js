@@ -8,6 +8,7 @@ const client = new ApolloClient({
 });
 
 // start load phones
+
 export const loadContactsSuccess = (phones) => ({
    type: 'LOAD_CONTACT_SUCCESS',
    phones
@@ -17,15 +18,19 @@ export const loadContactsFailure = () => ({
    type: 'LOAD_CONTACT_FAILURE'
 })
 
-export const loadContacts = () => {
+export const loadContacts = (offset = 0, limit = 5) => {
+   console.log(offset, limit);
    const phonesQuery = gql`
-   query {
-      phones{
-         id
-         name
-         phone
+   query{
+      phones(pagination:{offset: ${offset}, limit:${limit}}){
+         count
+         items{
+            id
+            name
+            phone
+         }
       }
-    }`;
+   }`;
    return dispatch => {
       return client.query({
          query: phonesQuery
@@ -39,6 +44,7 @@ export const loadContacts = () => {
          })
    }
 }
+
 
 export const searchContacts = (name, phone) => {
    const searchQuery = gql`
@@ -133,7 +139,6 @@ export const postContact = (name, phone) => {
 // post contact end
 
 // Resend start
-
 export const resendContact = (id, name, phone) => {
    const addQuery = gql`
         mutation addContact($id: ID!, $name: String!, $phone: String!) {
@@ -298,3 +303,20 @@ export const updateContact = (id, name, phone) => {
    }
 }
 // Edit contact-end
+
+// Pagination actions start
+export const nextPage = () => ({
+   type: 'NEXT_PAGE'
+})
+
+export const changePage = (page) => ({
+   type: 'CHANGE_PAGE',
+   page
+})
+
+export const previousPage = () => ({
+   type: 'PREVIOUS_PAGE'
+})
+
+
+// pagination actions end

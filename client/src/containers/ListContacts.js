@@ -37,9 +37,9 @@ class ContactList extends Component {
       })
 
       return (
-         <div className="contact-list" style={{fontFamily: "Roboto"}}>
+         <div className="contact-list" style={{ fontFamily: "Roboto" }}>
             <table className="table">
-               <thead className="thead-dark" style={{ fontSize : "19px" }}>
+               <thead className="thead-dark" style={{ fontSize: "19px" }}>
                   <tr>
                      <th scope="col">#</th>
                      <th scope="col">Name</th>
@@ -57,7 +57,9 @@ class ContactList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-   contacts: state.contacts
+   contacts: state.contacts.contacts,
+   page: state.contacts.pages,
+   page: state.contacts.page
 })
 
 const mapDispatchToProps = (dispatch) => ({
