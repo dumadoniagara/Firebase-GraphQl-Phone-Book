@@ -48,8 +48,7 @@ export const loadContacts = (offset = 0, limit = 5) => {
 export const searchContacts = (name, phone, offset = 0, limit = 5) => {
    console.log(name, phone, offset, limit);
    const searchQuery = gql`
-   query{
-      phones(
+   query phones(
          $name : String!, 
          $phone: String!
          $pagination : PaginationArg!
@@ -60,9 +59,9 @@ export const searchContacts = (name, phone, offset = 0, limit = 5) => {
             offset : $offset,
             limit : $limit
          }
-      ){
+      ) {
          count
-         items:{
+         items{
             id
             name
             phone
