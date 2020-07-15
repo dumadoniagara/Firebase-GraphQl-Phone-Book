@@ -18,7 +18,7 @@ export const loadContactsFailure = () => ({
 })
 
 export const loadContacts = (offset = 0, limit = 5) => {
-   console.log(offset, limit);
+
    const phonesQuery = gql`
    query{
       phones(pagination:{offset: ${offset}, limit:${limit}}){
@@ -46,27 +46,43 @@ export const loadContacts = (offset = 0, limit = 5) => {
 
 
 export const searchContacts = (name, phone, offset = 0, limit = 5) => {
+   console.log(name, phone, offset, limit);
    const searchQuery = gql`
    query{
-      phones(name: ${name}, phone:${phone}, pagination:{offset: ${offset}, limit:${limit}}){
+      phones(
+         $name : String!, 
+         $phone: String!
+         $pagination : PaginationArg!
+      )phones(
+         name : $name,
+         phone: $phone,
+         pagination : {
+            offset : $offset,
+            limit : $limit
+         }
+      ){
          count
-         items{
+         items:{
             id
             name
             phone
          }
       }
-   }`
+   }   
+   `;
    return dispatch => {
       return client.query({
          query: searchQuery,
          variables: {
             name,
-            phone
+            phone,
+            offset,
+            limit
          }
       })
          .then(function (response) {
-            dispatch(loadContactsSuccess(response.data.searchPhones))
+            console.log(response.data.phones)
+            dispatch(loadContactsSuccess(response.data.phones))
          })
          .catch(function (error) {
             console.log(error);
