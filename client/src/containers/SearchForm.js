@@ -12,10 +12,6 @@ class SearchForm extends Component {
       this.handleReset = this.handleReset.bind(this);
    }
 
-   componentDidUpdate(){
-      console.log('filtername global:', this.props.filterName)
-   }
-
    handleChangeName(event) {
       let { phone } = this.state
       this.setState({ name: event.target.value })

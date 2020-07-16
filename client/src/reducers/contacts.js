@@ -55,7 +55,6 @@ const contacts = (state = initState, action) => {
          }
 
       case 'ON_UPDATE_CONTACT':
-         console.log('id yang mau diedit adalah', action.id);
          return {
             ...state,
             contacts: state.contacts.map((item) => {
@@ -78,7 +77,6 @@ const contacts = (state = initState, action) => {
          }
 
       case 'UPDATE_CONTACT':
-         console.log('ini state setelah di update', state)
          return {
             ...state,
             contacts: state.contacts.map(item => {
@@ -136,7 +134,6 @@ const contacts = (state = initState, action) => {
          }
 
       case 'ON_SEARCH':
-         console.log('masuk ON_SEARCH:', action)
          return {
             ...state,
             isSearch: true,
