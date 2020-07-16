@@ -93,7 +93,6 @@ const searchContacts = (name, phone, offset = 0, limit = 5) => {
             resolve([]);
          } else {
             const data = Object.keys(folders).map(o => Object.assign({ id: o }, folders[o]))
-               .splice(offset, limit)
                .filter(item => {
                   if (name && phone) {
                      return item.name.match(regName) && item.phone.match(regPhone)
@@ -105,6 +104,7 @@ const searchContacts = (name, phone, offset = 0, limit = 5) => {
                      return false;
                   }
                })
+               .splice(offset, limit)
             resolve(data);
          }
          phoneReference.off("value");

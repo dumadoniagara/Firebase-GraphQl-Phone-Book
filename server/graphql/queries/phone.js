@@ -19,7 +19,7 @@ exports.queryType = new GraphQLObjectType({
                }
             },
             resolve(root, params) {
-               const { offset, limit } = params.pagination
+               let { offset, limit } = params.pagination
                const { name, phone } = params
                if (!name && !phone) {
                   return {

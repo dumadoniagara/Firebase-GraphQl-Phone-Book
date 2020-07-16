@@ -1,7 +1,10 @@
 const initState = {
    contacts: [],
    page: 1,
-   pages: 0
+   pages: 0,
+   isSearch: false,
+   filterName: '',
+   filterPhone: ''
 }
 
 const contacts = (state = initState, action) => {
@@ -130,6 +133,15 @@ const contacts = (state = initState, action) => {
          return {
             ...state,
             page: action.page
+         }
+
+      case 'ON_SEARCH':
+         console.log('masuk ON_SEARCH:', action)
+         return {
+            ...state,
+            isSearch: true,
+            filterName: action.filter.name,
+            filterPhone: action.filter.phone
          }
 
       case 'DELETE_CONTACT_SUCCESS':

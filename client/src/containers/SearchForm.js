@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchContacts, loadContacts } from '../actions';
+import { searchContacts, loadContacts, onSearch } from '../actions';
 
 class SearchForm extends Component {
 
@@ -12,17 +12,22 @@ class SearchForm extends Component {
       this.handleReset = this.handleReset.bind(this);
    }
 
+   componentDidUpdate(){
+      console.log('filtername global:', this.props.filterName)
+   }
+
    handleChangeName(event) {
       let { phone } = this.state
-      console.log(event.target.value)
       this.setState({ name: event.target.value })
       this.props.searchContacts(event.target.value, phone)
+      this.props.onSearch({ name: event.target.value, phone: phone })
    }
 
    handleChangePhone(event) {
       let { name } = this.state
       this.setState({ phone: event.target.value })
       this.props.searchContacts(name, event.target.value)
+      this.props.onSearch({ name: name, phone: event.target.value })
    }
 
    handleReset(event) {
@@ -78,13 +83,20 @@ class SearchForm extends Component {
    }
 }
 
+const mapStateToProps = (state) => ({
+   isSearch: state.contacts.isSearch,
+   filterName: state.contacts.filterName,
+   filterPhone: state.contacts.filterPhone
+})
+
 const mapDispatchToProps = dispatch => ({
    searchContacts: (name, phone, offset, limit) => dispatch(searchContacts(name, phone, offset = 0, limit = 5)),
-   loadContacts: () => dispatch(loadContacts())
+   loadContacts: () => dispatch(loadContacts()),
+   onSearch: (filter) => dispatch(onSearch(filter))
 })
 
 export default connect(
-   null,
+   mapStateToProps,
    mapDispatchToProps
 )(SearchForm)
 

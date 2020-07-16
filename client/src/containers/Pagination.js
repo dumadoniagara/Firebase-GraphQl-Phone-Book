@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadContacts, nextPage, previousPage, changePage } from '../actions';
+import { loadContacts, nextPage, previousPage, changePage, searchContacts } from '../actions';
 
 class Pagination extends Component {
    constructor(props) {
@@ -11,37 +11,41 @@ class Pagination extends Component {
       this.handleNext = this.handleNext.bind(this);
       this.handlePrevious = this.handlePrevious.bind(this);
       this.handlePage = this.handlePage.bind(this);
-      this.ref = React.createRef();
-   }
-
-   componentDidMount() {
-      console.log(this.state)
-   }
-
-   componentDidUpdate() {
-      console.log('state page global :', this.props.page)
    }
 
    handlePrevious(event) {
       const { limit } = this.state;
       let offset = ((this.props.page - 1) - 1) * limit
-      this.props.loadContacts(offset);
+      if (this.props.isSearch) {
+         this.props.searchContacts(this.props.filterName, this.props.filterPhone, offset, limit);
+      } else {
+         this.props.loadContacts(offset);
+      }
       this.props.previousPage();
       event.preventDefault();
    }
 
    handleNext(event) {
       const { limit } = this.state;
-      let offset = ((this.props.page + 1) - 1) * limit
-      this.props.loadContacts(offset);
+      let offset = ((this.props.page + 1) - 1) * limit;
+      if (this.props.isSearch) {
+         this.props.searchContacts(this.props.filterName, this.props.filterPhone, offset, limit);
+      } else {
+         this.props.loadContacts(offset);
+      }
       this.props.nextPage();
       event.preventDefault();
    }
 
    handlePage(event) {
+      const { limit } = this.state;
       const page = parseInt(event.target.id);
       const offset = (page - 1) * this.state.limit;
-      this.props.loadContacts(offset);
+      if (this.props.isSearch) {
+         this.props.searchContacts(this.props.filterName, this.props.filterPhone, offset, limit);
+      } else {
+         this.props.loadContacts(offset);
+      }
       this.props.changePage(page);
       event.preventDefault();
    }
@@ -70,11 +74,15 @@ class Pagination extends Component {
 
 const mapStateToProps = (state) => ({
    page: state.contacts.page,
-   pages: state.contacts.pages
+   pages: state.contacts.pages,
+   isSearch: state.contacts.isSearch,
+   filterName: state.contacts.filterName,
+   filterPhone: state.contacts.filterPhone
 })
 
 const mapDispatchToProps = dispatch => ({
    loadContacts: (offset, limit) => dispatch(loadContacts(offset, limit)),
+   searchContacts: (name, phone, offset, limit) => (dispatch(searchContacts(name, phone, offset, limit))),
    changePage: (page) => dispatch(changePage(page)),
    nextPage: () => dispatch(nextPage()),
    previousPage: () => dispatch(previousPage())

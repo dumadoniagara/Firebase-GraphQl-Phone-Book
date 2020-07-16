@@ -336,3 +336,10 @@ export const previousPage = () => ({
    type: 'PREVIOUS_PAGE'
 })
 // pagination actions end
+
+
+// On search 
+export const onSearch = (filter) => ({
+   type: 'ON_SEARCH',
+   filter
+})
