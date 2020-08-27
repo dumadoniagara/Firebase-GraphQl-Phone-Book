@@ -11,3 +11,4 @@ Back-end :
 Front-end :
 - React.js
 - React-redux
+- Apollo-client
